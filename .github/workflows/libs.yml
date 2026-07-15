@@ -21,7 +21,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 1
 
@@ -30,7 +30,7 @@ jobs:
           sudo apt-get install libtinfo6
 
       - name: Cache packs
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           key: packs-${{ github.run_id }}
           restore-keys: |
@@ -61,7 +61,7 @@ jobs:
           tar -cvjf RTX_Lib.tar.bz2 ARM/* GCC/* CLANG/* IAR/*
     
       - name: Upload Library archive
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: RTX_Lib
           path: ./Library/RTX_Lib.tar.bz2

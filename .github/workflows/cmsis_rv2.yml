@@ -27,45 +27,40 @@ jobs:
 
     steps:
       - name: Checkout CMSIS-RTX
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: CMSIS-RTX
           fetch-depth: 0
       
       - name: Checkout CMSIS_6
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: ARM-software/CMSIS_6
           path: CMSIS_6
 
       - name: Checkout CMSIS-RTOS2_Validation
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: ARM-software/CMSIS-RTOS2_Validation
           path: CMSIS-RTOS2_Validation
 
       - name: Checkout Cortex_DFP
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: ARM-software/Cortex_DFP
           path: Cortex_DFP
   
-      - name: Setup Python 3.10
+      - name: Setup Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.10'    
-
-      - name: Install system packages
-        run: |
-          sudo add-apt-repository ppa:deadsnakes/ppa
-          sudo apt-get install libpython3.9 libtinfo6
+          python-version: '3.13'
 
       - name: Python requirements
         run: |
           pip install -r ./CMSIS-RTOS2_Validation/Project/requirements.txt
 
       - name: Cache packs
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           key: packs-${{ github.run_id }}-${{ matrix.compiler }}-${{ matrix.variant }}
           restore-keys: |
@@ -75,7 +70,7 @@ jobs:
       - name: Setup vcpkg environment
         uses: ARM-software/cmsis-actions/vcpkg@v1.1
         with:
-          config: ./CMSIS-RTOS2_Validation/Project/vcpkg-configuration.json
+          config: ./CMSIS-RTOS2_Validation/.ci/vcpkg-configuration.json
           cache: "-${{ matrix.compiler }}-${{ matrix.variant }}"
 
       - name: Activate Arm tool license
@@ -133,7 +128,7 @@ jobs:
 
       - name: Upload Test Reports
         if: ${{ !cancelled() && env.ARM_UBL_ACTIVATION_CODE }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: test-results-${{ matrix.compiler }}-${{ matrix.variant }}
           path: ./CMSIS-RTOS2_Validation/Project/*.junit
@@ -150,7 +145,7 @@ jobs:
     steps:
       - name: Download Test Reports
         if: ${{ env.ARM_UBL_ACTIVATION_CODE }}
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           path: artifacts
 
