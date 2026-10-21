@@ -71,8 +71,6 @@ jobs:
       uses: ARM-software/cmsis-actions/vcpkg@v1
       with:
         config: ./.ci/vcpkg-configuration.json
-    - name: Activate Arm tool license
-      uses: ARM-software/cmsis-actions/armlm@v1
     - name: Initialize CMSIS pack root folder
       run: |
         cpackget init https://www.keil.com/pack/index.pidx
