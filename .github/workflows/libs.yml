@@ -16,7 +16,6 @@ jobs:
         fetch-depth: 1
         repository: Evagan2018/CMSIS-RTX
         ref: gcc-15.3.2-qualification-20261021-133244
-      run: ''
     - name: Install system packages
       run: sudo apt-get install libtinfo6
     - name: Cache packs
@@ -26,12 +25,10 @@ jobs:
         restore-keys: |
           packs-
         path: /home/runner/.cache/arm/packs
-      run: ''
     - name: Setup build environment
       uses: ARM-software/cmsis-actions/vcpkg@v1
       with:
         config: ./Library/vcpkg-configuration.json
-      run: ''
     - name: Install GCC 15.3.2 qualification probe
       id: gcc_probe
       if: ${{ !cancelled() }}
@@ -147,7 +144,6 @@ jobs:
       with:
         name: RTX_Lib
         path: ./Library/RTX_Lib.tar.bz2
-      run: ''
     - name: Verify GCC 15.3.2 compilation evidence
       if: always()
       shell: bash
