@@ -83,6 +83,8 @@ jobs:
       run: |
         mkdir -p ./.ci/${{ matrix.test.dir }}
         cp -a ./${{ matrix.test.dir }}/* ./.ci/${{ matrix.test.dir }}/
+    - name: Activate Arm tool license
+      uses: ARM-software/cmsis-actions/armlm@v1
     - name: Install GCC 15.3.2 qualification probe
       id: gcc_probe
       if: ${{ !cancelled() }}
